@@ -1,27 +1,27 @@
 import { LogoWhiteSvg } from "@/svgs/logo-white";
-import styles from "./page.module.css";
+import styles from "./styles.module.css";
 import Link from "next/link";
+import { BackSvg } from "@/svgs/back";
 
-export default function Home() {
+const Request = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.header}>
+          <BackSvg color="#FFFFFF" />
           <LogoWhiteSvg />
           <h2>Exit</h2>
         </div>
         <div className={styles.wrapper}>
-          <h2>
-            Welcome! <br /> <span>Before we get started...</span>
-          </h2>
-          <p>
-            Please take a moment to read and accept our <span>Terms and Conditions</span> in order to continue with your registration process.
-          </p>
+          <h2>Let’s get to know you!</h2>
+          <p>We’ll need your Barbados issued ID (national ID, passport, or driver’s license) and selfie.</p>
         </div>
       </div>
       <div className={styles.link}>
-        <Link href="/how">OPEN ACCOUNT</Link>
+        <Link href="/prerequisite">CONTINUE</Link>
       </div>
     </div>
   );
-}
+};
+
+export default Request;

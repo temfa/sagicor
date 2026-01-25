@@ -1,0 +1,35 @@
+"use client";
+import { useState } from "react";
+import styles from "./styles.module.css";
+import { LogoSvg } from "@/svgs/logo";
+import { Button } from "../button";
+import { useRouter } from "next/navigation";
+
+export const HowBody = () => {
+  const router = useRouter();
+  const [active, setActive] = useState(false);
+  return (
+    <div className={styles.container}>
+      <div className={styles.top}>
+        <div className={styles.header}>
+          <LogoSvg />
+          <h2>Exit</h2>
+        </div>
+        <div className={styles.how}>
+          <h2>How we use your data</h2>
+          <p>
+            <span>Sagicor Bank</span> collects and stores identification information (ID card, driver&rsquo;s licence, passport, selfie and address) to allow us to verify your
+            identity and secure your account when you register to use the services of Sagicor Bank (Barbados) Limited.
+          </p>
+        </div>
+      </div>
+      <div className={styles.bottom}>
+        <div className={styles.input}>
+          <input type="checkbox" name="" id="" onChange={() => setActive(true)} />
+          <p>I consent to the collection and usage of my data</p>
+        </div>
+        <Button buttonText="CONFIRM" loading={false} active={active} onClick={() => router.push("/user")} />
+      </div>
+    </div>
+  );
+};

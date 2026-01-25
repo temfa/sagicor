@@ -1,15 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+export const helvetica = localFont({
+  src: [
+    {
+      path: "../public/fonts/HelveticaNeueRoman.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/HelveticaNeueLight.otf",
+      weight: "300",
+      style: "normal",
+    },
+
+    {
+      path: "../public/fonts/HelveticaNeueMedium.otf",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+  variable: "--font-helvetica",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,9 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
-      </body>
+      <body className={`${montserrat.variable} ${helvetica.variable}`}>{children}</body>
     </html>
   );
 }

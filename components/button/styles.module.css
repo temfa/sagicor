@@ -1,0 +1,41 @@
+.active {
+    width: 100%;
+    background-color: #2B388F;
+    padding: 12px 0px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 26px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.disabled {
+    width: 100%;
+    background-color: transparent;
+    padding: 12px 0px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 26px;
+    color: #2B388F;
+    border: 2px solid #2B388F;
+    cursor: pointer;
+    text-transform: capitalize
+}
+
+.inactive {
+    width: 100%;
+    background-color: #AEAEAE;
+    padding: 12px 0px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 26px;
+    color: white;
+    cursor: pointer;
+    text-transform: capitalize;
+    border: none;
+}

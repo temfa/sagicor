@@ -1,0 +1,33 @@
+.select {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.select label {
+    color: #76A9A6;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+}
+
+.select select {
+    border-radius: 8px;
+    border: 1px solid #EDEDED;
+    background: transparent;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    color: #AEAEAE;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.6%;
+    vertical-align: middle;
+    /* box-shadow: 0px 1px 2px 0px #E4E5E73D; */
+    appearance: none;
+    background-image: url("../../public/images/arrow-down.png");
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+}
