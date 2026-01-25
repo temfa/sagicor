@@ -7,9 +7,11 @@ import { LogoSvg } from "@/svgs/logo";
 import { Select } from "../select";
 import { useForm } from "react-hook-form";
 import Input from "../input";
+import { useRouter } from "next/navigation";
 
 export const MultiForm = () => {
   const [page, setPage] = useState(1);
+  const router = useRouter();
 
   const { register, handleSubmit } = useForm();
   return (
@@ -165,7 +167,7 @@ export const MultiForm = () => {
           </div>
         )}
       </div>
-      <Button buttonText="Next" loading={false} active onClick={() => setPage(page + 1)} />
+      <Button buttonText="Next" loading={false} active onClick={() => (page !== 4 ? setPage(page + 1) : router.push("/status"))} />
     </div>
   );
 };
