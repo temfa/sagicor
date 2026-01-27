@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as crypto from "crypto";
 import CryptoJS from "crypto-js";
 /**
@@ -150,3 +151,32 @@ String.prototype.encryptWith3Des = function (plainKey: string, strictMode: boole
 String.prototype.decryptWith3Des = function (plainKey: string, strictMode: boolean = false): string {
   return decryptWith3Des(this.toString(), plainKey, strictMode);
 };
+
+// Step 1: Derive 24-byte 3DES key like backend (SHA-256 + first 24 bytes)
+function derive3DesKey(plainKey: string): CryptoJS.lib.WordArray {
+  // SHA-256 hash
+  const hash = CryptoJS.SHA256(plainKey);
+
+  // Take first 24 bytes (192 bits) for 3DES
+  return CryptoJS.lib.WordArray.create(hash.words.slice(0, 6), 24);
+}
+
+// Step 2: Decrypt Base64 string
+export function decrypt3DESBrowser(encryptedBase64: string, plainKey: string = "KopqC22gKwFmXpLw369IlPNCtozTvzLBwUFKCv3KHX8=") {
+  // Remove newlines and whitespace
+  const cleaned = encryptedBase64.replace(/\s+/g, "");
+
+  // Base64 decode to WordArray
+  const encryptedWords = CryptoJS.enc.Base64.parse(cleaned);
+
+  // Derive key
+  const key = derive3DesKey(plainKey);
+
+  // Decrypt using ECB + PKCS5Padding (CryptoJS default)
+  const decrypted = CryptoJS.TripleDES.decrypt({ ciphertext: encryptedWords } as any, key, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+
+  return decrypted.toString(CryptoJS.enc.Utf8);
+}

@@ -1,6 +1,6 @@
 "use client";
 import { LogoWhiteSvg } from "@/svgs/logo-white";
-import { decryptWith3DesClient } from "@/utils/helper";
+import { decrypt3DESBrowser } from "@/utils/helper";
 import { setItem } from "@/utils/lib";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -9,7 +9,7 @@ import styles from "../../app/page.module.css";
 export const HomePage = () => {
   const searchParams = useSearchParams();
   const params = searchParams.get("params");
-  const payload = decryptWith3DesClient(decodeURIComponent(params as string), "KopqC22gKwFmXpLw369IlPNCtozTvzLBwUFKCv3KHX8=");
+  const payload = decrypt3DESBrowser(params as string);
   const parsedPayload = JSON.parse(payload);
   setItem("params", payload);
   return (
