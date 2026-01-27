@@ -1,17 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { LogoWhiteSvg } from "@/svgs/logo-white";
 import { decrypt3DESBrowser } from "@/utils/helper";
-import { setItem } from "@/utils/lib";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import styles from "../../app/page.module.css";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { addDetails } from "@/redux/slice/details";
 
 export const HomePage = () => {
   const searchParams = useSearchParams();
   const params = searchParams.get("params");
   const payload = decrypt3DESBrowser(params as string);
   const parsedPayload = JSON.parse(payload);
-  setItem("params", payload);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(addDetails(payload));
+  }, []);
   return (
     <div className={styles.container}>
       <div className={styles.top}>

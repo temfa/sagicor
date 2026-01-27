@@ -4,12 +4,12 @@ import styles from "./styles.module.css";
 import { LogoSvg } from "@/svgs/logo";
 import { Button } from "../button";
 import { useRouter } from "next/navigation";
-import { getItem } from "@/utils/lib";
+import { useAppSelector } from "@/redux/store/store";
 
 export const HowBody = () => {
   const router = useRouter();
   const [active, setActive] = useState(false);
-  const link = getItem("params");
+  const link = useAppSelector((store) => store.details);
   const parsedLink = JSON.parse(link as string);
   return (
     <div className={styles.container}>

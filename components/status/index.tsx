@@ -2,10 +2,10 @@
 import { LogoSvg } from "@/svgs/logo";
 import styles from "./styles.module.css";
 import { Button } from "../button";
-import { getItem } from "@/utils/lib";
+import { useAppSelector } from "@/redux/store/store";
 
 export const StatusBody = () => {
-  const link = getItem("params");
+  const link = useAppSelector((store) => store.details);
   const parsedLink = JSON.parse(link as string);
   return (
     <div className={styles.container}>

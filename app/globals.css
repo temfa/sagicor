@@ -72,6 +72,16 @@ body {
   justify-content: center;
 }
 
+
+.loader-text {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+
 .video {
   width: fit-content;
   height: fit-content;

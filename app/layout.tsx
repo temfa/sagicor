@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Providers } from "@/redux/provider";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -43,7 +44,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${helvetica.variable}`}>{children}</body>
+      <body className={`${montserrat.variable} ${helvetica.variable}`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
