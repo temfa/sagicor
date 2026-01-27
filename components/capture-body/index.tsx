@@ -14,9 +14,9 @@ export const CaptureBody = () => {
       <LogoSvg />
       <div>
         <h2>{headings[page - 1]}</h2>
-        {page === 1 && <CameraCapture action={() => setPage(page + 1)} />}
-        {page === 2 && <CameraCapture action={() => setPage(page + 1)} />}
-        {page === 3 && <CameraCapture action={() => router.push("/register")} />}
+        {page === 1 && <CameraCapture action={() => setPage(page + 1)} cameraType="environment" />}
+        {page === 2 && <CameraCapture action={() => setPage(page + 1)} cameraType="environment" />}
+        {page === 3 && <CameraCapture action={() => router.push("/register")} cameraType="user" />}
       </div>
     </div>
   );

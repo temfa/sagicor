@@ -1,22 +1,23 @@
-// components/CameraCapture.tsx
 "use client";
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../button";
 
-export default function CameraCapture({ action }: { action: () => void }) {
+type CameraType = "user" | "environment";
+
+export default function CameraCapture({ action, cameraType }: { action: () => void; cameraType: CameraType }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
-    let stream: MediaStream;
+    let stream: MediaStream | null = null;
 
     const startCamera = async () => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "user" }, // use 'user' for selfie
+          video: { facingMode: cameraType },
         });
 
         if (videoRef.current) {
@@ -30,10 +31,9 @@ export default function CameraCapture({ action }: { action: () => void }) {
     startCamera();
 
     return () => {
-      // Stop camera on unmount
       stream?.getTracks().forEach((track) => track.stop());
     };
-  }, []);
+  }, [cameraType]); // 👈 only change
 
   const takePicture = () => {
     const video = videoRef.current;
@@ -47,13 +47,14 @@ export default function CameraCapture({ action }: { action: () => void }) {
     const ctx = canvas.getContext("2d");
     ctx?.drawImage(video, 0, 0);
 
-    const imageData = canvas.toDataURL("image/jpeg");
+    const imageData = canvas.toDataURL("image/jpeg", 0.9);
     setImage(imageData);
   };
 
   return (
     <div>
-      <video ref={videoRef} autoPlay playsInline width="100%" />
+      <video ref={videoRef} autoPlay playsInline muted width="100%" />
+
       <Button buttonText="Take Picture" loading={false} active onClick={takePicture} />
 
       <canvas ref={canvasRef} style={{ display: "none" }} />
@@ -61,9 +62,16 @@ export default function CameraCapture({ action }: { action: () => void }) {
       {image && (
         <div>
           <h3 style={{ marginTop: 21 }}>Captured Image</h3>
-          <div style={{ position: "relative", width: "100%", height: 350, marginBottom: 16 }}>
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              height: 350,
+              marginBottom: 16,
+            }}>
             <Image src={image} alt="Captured" fill />
           </div>
+
           <Button buttonText="Continue" loading={false} active onClick={action} />
         </div>
       )}
