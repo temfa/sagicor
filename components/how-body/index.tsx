@@ -4,16 +4,19 @@ import styles from "./styles.module.css";
 import { LogoSvg } from "@/svgs/logo";
 import { Button } from "../button";
 import { useRouter } from "next/navigation";
+import { getItem } from "@/utils/lib";
 
 export const HowBody = () => {
   const router = useRouter();
   const [active, setActive] = useState(false);
+  const link = getItem("params");
+  const parsedLink = JSON.parse(link as string);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.header}>
           <LogoSvg />
-          <h2>Exit</h2>
+          <h2 onClick={() => (window.location.href = parsedLink.deepLinkUrl)}>Exit</h2>
         </div>
         <div className={styles.how}>
           <h2>How we use your data</h2>

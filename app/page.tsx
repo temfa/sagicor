@@ -1,14 +1,23 @@
+"use client";
 import { LogoWhiteSvg } from "@/svgs/logo-white";
 import styles from "./page.module.css";
 import Link from "next/link";
+import { decryptWith3DesClient } from "@/utils/helper";
+import { useSearchParams } from "next/navigation";
+import { setItem } from "@/utils/lib";
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const params = searchParams.get("params");
+  const payload = decryptWith3DesClient(decodeURIComponent(params as string), "KopqC22gKwFmXpLw369IlPNCtozTvzLBwUFKCv3KHX8=");
+  const parsedPayload = JSON.parse(payload);
+  setItem("params", payload);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.header}>
           <LogoWhiteSvg />
-          <h2>Exit</h2>
+          <h2 onClick={() => (window.location.href = parsedPayload.deepLinkUrl)}>Exit</h2>
         </div>
         <div className={styles.wrapper}>
           <h2>

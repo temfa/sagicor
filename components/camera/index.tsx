@@ -3,6 +3,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "../button";
 
 export default function CameraCapture({ action }: { action: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -53,17 +54,17 @@ export default function CameraCapture({ action }: { action: () => void }) {
   return (
     <div>
       <video ref={videoRef} autoPlay playsInline width="100%" />
-      <button onClick={takePicture}>Take Picture</button>
+      <Button buttonText="Take Picture" loading={false} active onClick={takePicture} />
 
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
       {image && (
         <div>
-          <h3>Captured Image</h3>
-          <div style={{ position: "relative", width: 350, height: 350 }}>
+          <h3 style={{ marginTop: 21 }}>Captured Image</h3>
+          <div style={{ position: "relative", width: "100%", height: 350, marginBottom: 16 }}>
             <Image src={image} alt="Captured" fill />
           </div>
-          <button onClick={action}>Continue</button>
+          <Button buttonText="Continue" loading={false} active onClick={action} />
         </div>
       )}
     </div>
