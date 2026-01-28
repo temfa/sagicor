@@ -70,8 +70,8 @@ export const MultiForm = () => {
                 label="Citizenship"
                 placeholder="Choose Citizenship"
                 data={[
-                  { title: "Male", value: "Male" },
-                  { title: "Female", value: "Female" },
+                  { title: "Citizen", value: "Citizen" },
+                  { title: "Tourist", value: "Tourist" },
                 ]}
                 name="citizenship"
                 register={register}
@@ -80,8 +80,8 @@ export const MultiForm = () => {
                 label="Nationality"
                 placeholder="Choose Nationality"
                 data={[
-                  { title: "Male", value: "Male" },
-                  { title: "Female", value: "Female" },
+                  { title: "Barbados", value: "Barbados" },
+                  //   { title: "Female", value: "Female" },
                 ]}
                 name="nationality"
                 register={register}
@@ -103,8 +103,8 @@ export const MultiForm = () => {
                 label="City"
                 placeholder="Choose City"
                 data={[
-                  { title: "Male", value: "Male" },
-                  { title: "Female", value: "Female" },
+                  { title: "St. James", value: "St. James" },
+                  //   { title: "Female", value: "Female" },
                 ]}
                 name="city"
                 register={register}
@@ -113,8 +113,8 @@ export const MultiForm = () => {
                 label="State/Province/Region/Parish"
                 placeholder="Choose State"
                 data={[
-                  { title: "Male", value: "Male" },
-                  { title: "Female", value: "Female" },
+                  { title: "St. John", value: "St. John" },
+                  //   { title: "Female", value: "Female" },
                 ]}
                 name="state"
                 register={register}
@@ -123,8 +123,8 @@ export const MultiForm = () => {
                 label="Country"
                 placeholder="Choose Country"
                 data={[
-                  { title: "Male", value: "Male" },
-                  { title: "Female", value: "Female" },
+                  { title: "Barbados", value: "Barbados" },
+                  //   { title: "Female", value: "Female" },
                 ]}
                 name="country"
                 register={register}
@@ -144,8 +144,8 @@ export const MultiForm = () => {
                 label="Type"
                 placeholder="Choose Type"
                 data={[
-                  { title: "Male", value: "Male" },
-                  { title: "Female", value: "Female" },
+                  { title: "Driver's License", value: "Driver's License" },
+                  { title: "National ID", value: "National ID" },
                 ]}
                 name="city"
                 register={register}
@@ -154,8 +154,8 @@ export const MultiForm = () => {
                 label="Issuing Country"
                 placeholder="Choose Issuing Country"
                 data={[
-                  { title: "Male", value: "Male" },
-                  { title: "Female", value: "Female" },
+                  { title: "Barbados", value: "Barbados" },
+                  //   { title: "Female", value: "Female" },
                 ]}
                 name="state"
                 register={register}
@@ -173,14 +173,14 @@ export const MultiForm = () => {
               <p>(Banking regulators need to know).</p>
             </div>
             <div className={styles.form}>
-              <Select label="Source of Funds" placeholder="Choose Source" data={[{ title: "Mr", value: "Mr" }]} name="source" register={register} />
+              <Select label="Source of Funds" placeholder="Choose Source" data={[{ title: "Income", value: "Income" }]} name="source" register={register} />
               <Input label="Source of Other Funds" placeholder="Enter Source of Other Funds" name="other" register={register} type="text" />
               <Select
                 label="Purpose of Account"
                 placeholder="Choose Purpose of Account"
                 data={[
-                  { title: "Male", value: "Male" },
-                  { title: "Female", value: "Female" },
+                  { title: "Savings", value: "Savings" },
+                  //   { title: "Female", value: "Female" },
                 ]}
                 name="gender"
                 register={register}

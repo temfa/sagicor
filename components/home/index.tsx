@@ -6,17 +6,21 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import styles from "../../app/page.module.css";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addDetails } from "@/redux/slice/details";
 
 export const HomePage = () => {
+  const [parsedPayload, setParsedPayload] = useState({ email: "", phoneNumber: "", deepLinkUrl: "" });
   const searchParams = useSearchParams();
   const params = searchParams.get("params");
-  const payload = decrypt3DESBrowser(params as string);
-  const parsedPayload = JSON.parse(payload);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(addDetails(payload));
+    if (params) {
+      const payload = decrypt3DESBrowser(params as string);
+      setParsedPayload(JSON.parse(payload));
+      dispatch(addDetails(payload));
+    }
   }, []);
   return (
     <div className={styles.container}>
