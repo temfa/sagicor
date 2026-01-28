@@ -53,7 +53,7 @@ export default function CameraCapture({ action, cameraType }: { action: () => vo
 
   return (
     <div>
-      <video ref={videoRef} autoPlay playsInline muted width="100%" />
+      <video ref={videoRef} autoPlay playsInline muted width="100%" height="200px" />
 
       <Button buttonText="Take Picture" loading={false} active onClick={takePicture} />
 
@@ -66,7 +66,7 @@ export default function CameraCapture({ action, cameraType }: { action: () => vo
             style={{
               position: "relative",
               width: "100%",
-              height: 350,
+              height: 250,
               marginBottom: 16,
             }}>
             <Image src={image} alt="Captured" fill />

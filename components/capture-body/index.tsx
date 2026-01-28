@@ -12,7 +12,7 @@ export const CaptureBody = () => {
   return (
     <div className={styles.container}>
       <LogoSvg />
-      <div>
+      <div className={styles.wrapper}>
         <h2>{headings[page - 1]}</h2>
         {page === 1 && <CameraCapture action={() => setPage(page + 1)} cameraType="environment" />}
         {page === 2 && <CameraCapture action={() => setPage(page + 1)} cameraType="environment" />}
