@@ -41,6 +41,10 @@
     letter-spacing: 0%;
 }
 
+.how h2 span {
+    font-weight: 400;
+}
+
 .how div {
     display: flex;
     flex-direction: column;

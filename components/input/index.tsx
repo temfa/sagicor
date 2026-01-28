@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { FieldValues } from "react-hook-form";
 import { InputProps } from "@/utils/type";
 
-const Input = <T extends FieldValues>({ name, label, type, placeholder, register, rules, disabled, icon, onInput, onKeyDown, maxLength, ariaLabel }: InputProps<T>) => {
+const Input = <T extends FieldValues>({ name, label, type, placeholder, register, rules, disabled, icon, onInput, maxLength, ariaLabel }: InputProps<T>) => {
   return (
     <div className={styles.formGroup}>
       <label htmlFor={name}>{label}</label>
@@ -23,16 +23,7 @@ const Input = <T extends FieldValues>({ name, label, type, placeholder, register
           />
         </div>
       ) : (
-        <input
-          type={type}
-          placeholder={placeholder}
-          {...(register && register(name, rules))}
-          disabled={disabled}
-          onInput={onInput}
-          onKeyDown={onKeyDown}
-          maxLength={maxLength}
-          aria-label={ariaLabel}
-        />
+        <input type={type} placeholder={placeholder} {...register(name, rules)} disabled={disabled} maxLength={maxLength} aria-label={ariaLabel} />
       )}
     </div>
   );

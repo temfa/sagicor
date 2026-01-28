@@ -5,10 +5,26 @@ import { Button } from "../button";
 import styles from "./styles.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { Select } from "../select";
+import Image from "next/image";
+
+type FormData = {
+  country: string;
+  idType: string;
+};
 
 export const PrerequisiteBody = () => {
   const [page, setPage] = useState(1);
   const router = useRouter();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormData>();
+  const submit = () => {
+    setPage(4);
+  };
   return (
     <div className={styles.container}>
       <LogoSvg />
@@ -16,6 +32,9 @@ export const PrerequisiteBody = () => {
         {page === 1 ? (
           <div className={styles.first}>
             <h2>Please prepare your document before starting the process</h2>
+            <div>
+              <Image src="/images/hand.png" width={250} height={200} alt="Hand" />
+            </div>
           </div>
         ) : page === 2 ? (
           <div className={styles.second}>
@@ -29,41 +48,66 @@ export const PrerequisiteBody = () => {
             </p>
           </div>
         ) : page === 3 ? (
-          <div className={styles.fourth}>
-            <div className={styles.header}>
-              <h2>About your ID...</h2>
-              <p>What type of ID will you be using and in what country was it issued?</p>
+          <form onSubmit={handleSubmit(submit)} className={styles.fourth}>
+            <div>
+              <div className={styles.header}>
+                <h2>About your ID...</h2>
+                <p>What type of ID will you be using and in what country was it issued?</p>
+              </div>
+              <div className={styles.formGroup}>
+                <Select
+                  label="Country"
+                  placeholder="Choose  Country"
+                  data={[
+                    { title: "Barbados", value: "Barbados" },
+                    //   { title: "Female", value: "Female" },
+                  ]}
+                  name="country"
+                  register={register}
+                  rules={{
+                    required: "Country is required",
+                  }}
+                />
+                {errors.country && <span className="error">{errors.country.message}</span>}
+              </div>
+              <div className={styles.formGroup}>
+                <Select
+                  label="ID Type"
+                  placeholder="Choose ID Type"
+                  data={[
+                    { title: "Driver's License", value: "Driver's License" },
+                    { title: "National ID", value: "National ID" },
+                  ]}
+                  name="idType"
+                  register={register}
+                  rules={{
+                    required: "ID Type is required",
+                  }}
+                />
+                {errors.idType && <span className="error">{errors.idType.message}</span>}
+              </div>
             </div>
-            <div className={styles.formGroup}>
-              <label>Country</label>
-              <select>
-                <option value="">Country</option>
-                <option value="Barbados">Barbados</option>
-              </select>
-            </div>
-            <div className={styles.formGroup}>
-              <label>ID Type</label>
-              <select>
-                <option value="">ID Type</option>
-                <option value="id">National ID</option>
-                <option value="driver">Drivers License</option>
-              </select>
-            </div>
-          </div>
+            <Button buttonText={"CONTINUE"} loading={false} active />
+          </form>
         ) : (
           <div className={styles.first}>
             <h2>Capture your document</h2>
+            <div>
+              <Image src="/images/scan.png" width={250} height={200} alt="Hand" />
+            </div>
           </div>
         )}
       </div>
-      <Button
-        buttonText={page === 1 ? "Start" : "Continue"}
-        loading={false}
-        active
-        onClick={() => {
-          page !== 4 ? setPage(page + 1) : router.push("/capture");
-        }}
-      />
+      {page !== 3 && (
+        <Button
+          buttonText={page === 1 ? "START" : "CONTINUE"}
+          loading={false}
+          active
+          onClick={() => {
+            page !== 4 ? setPage(page + 1) : router.push("/capture");
+          }}
+        />
+      )}
     </div>
   );
 };

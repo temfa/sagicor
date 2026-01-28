@@ -12,12 +12,24 @@
     flex: 1;
 }
 
+.first {
+    height: 100%;
+}
+
 .first h2 {
     font-size: 20px;
     text-align: center;
     font-weight: 600;
     width: 75%;
     margin: 0px auto;
+}
+
+.first div {
+    height: 80%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .second {
@@ -53,12 +65,29 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    align-items: center;
+    flex: 1;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header p {
+    text-align: center;
+    width: 65%;
 }
 
 .formGroup {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    width: 100%;
+    margin-bottom: 16px;
 }
 
 .formGroup label {

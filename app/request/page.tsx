@@ -27,7 +27,9 @@ const Request = () => {
           <h2 onClick={() => (window.location.href = link)}>Exit</h2>
         </div>
         <div className={styles.wrapper}>
-          <h2>Let’s get to know you!</h2>
+          <h2>
+            Let’s <span>get to know you!</span>{" "}
+          </h2>
           <p>We’ll need your Barbados issued ID (national ID, passport, or driver’s license) and selfie.</p>
         </div>
       </div>
