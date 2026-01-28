@@ -31,7 +31,6 @@ const Input = <T extends FieldValues>({ name, label, type, placeholder, register
           onInput={onInput}
           onKeyDown={onKeyDown}
           maxLength={maxLength}
-          style={{ color: disabled ? "#FFFFFF99" : "#FFFFFFFA" }}
           aria-label={ariaLabel}
         />
       )}

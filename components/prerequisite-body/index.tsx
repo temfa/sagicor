@@ -29,10 +29,6 @@ export const PrerequisiteBody = () => {
             </p>
           </div>
         ) : page === 3 ? (
-          <div className={styles.first}>
-            <h2>Click &rsquo;Allow&rsquo; on your browser camera access prompt. It will appear right after this!</h2>
-          </div>
-        ) : page === 4 ? (
           <div className={styles.fourth}>
             <div className={styles.header}>
               <h2>About your ID...</h2>
@@ -65,7 +61,7 @@ export const PrerequisiteBody = () => {
         loading={false}
         active
         onClick={() => {
-          page !== 5 ? setPage(page + 1) : router.push("/capture");
+          page !== 4 ? setPage(page + 1) : router.push("/capture");
         }}
       />
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import styles from "./styles.module.css";
 import { LogoSvg } from "@/svgs/logo";
 import { Button } from "../button";
@@ -10,15 +10,22 @@ import { useAppSelector } from "@/redux/store/store";
 export const UserBody = () => {
   const router = useRouter();
   const [active, setActive] = useState(false);
-  const link = useAppSelector((store) => store.details);
-  const parsedLink = JSON.parse(link as string);
+  const details = useAppSelector((store) => store.details);
+  const link = useMemo(() => {
+    if (!details) return "";
+    try {
+      return JSON.parse(details)?.deepLinkUrl ?? "";
+    } catch {
+      return "";
+    }
+  }, [details]);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.header}>
-          <BackSvg color="#2B388F" />
+          <BackSvg color="#2B388F" action={() => router.back()} />
           <LogoSvg />
-          <h2 onClick={() => (window.location.href = parsedLink.deepLinkUrl)}>Exit</h2>
+          <h2 onClick={() => (window.location.href = link)}>Exit</h2>
         </div>
         <div className={styles.how}>
           <h2>

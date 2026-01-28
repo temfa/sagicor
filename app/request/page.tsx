@@ -1,16 +1,30 @@
+"use client";
 import { LogoWhiteSvg } from "@/svgs/logo-white";
 import styles from "./styles.module.css";
 import Link from "next/link";
 import { BackSvg } from "@/svgs/back";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
+import { useAppSelector } from "@/redux/store/store";
 
 const Request = () => {
+  const router = useRouter();
+  const details = useAppSelector((store) => store.details);
+  const link = useMemo(() => {
+    if (!details) return "";
+    try {
+      return JSON.parse(details)?.deepLinkUrl ?? "";
+    } catch {
+      return "";
+    }
+  }, [details]);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.header}>
-          <BackSvg color="#FFFFFF" />
+          <BackSvg color="#FFFFFF" action={() => router.back()} />
           <LogoWhiteSvg />
-          <h2>Exit</h2>
+          <h2 onClick={() => (window.location.href = link)}>Exit</h2>
         </div>
         <div className={styles.wrapper}>
           <h2>Let’s get to know you!</h2>

@@ -10,6 +10,7 @@ export default function CameraCapture({ action, cameraType }: { action: () => vo
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [image, setImage] = useState<string | null>(null);
+  const [isCameraReady, setIsCameraReady] = useState(false);
 
   useEffect(() => {
     let stream: MediaStream | null = null;
@@ -53,7 +54,19 @@ export default function CameraCapture({ action, cameraType }: { action: () => vo
 
   return (
     <div>
-      <video ref={videoRef} autoPlay playsInline muted width="100%" height="200px" />
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        muted
+        width="100%"
+        height="200px"
+        onLoadedMetadata={() => setIsCameraReady(true)}
+        style={{
+          opacity: isCameraReady ? 1 : 0,
+          transition: "opacity 0.2s ease",
+        }}
+      />
 
       <Button buttonText="Take Picture" loading={false} active onClick={takePicture} />
 

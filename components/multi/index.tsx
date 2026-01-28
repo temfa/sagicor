@@ -13,24 +13,27 @@ import { useAppSelector } from "@/redux/store/store";
 
 export const MultiForm = () => {
   const [page, setPage] = useState(1);
+  const [link, setLink] = useState("");
   const router = useRouter();
 
   const { register, handleSubmit, setValue } = useForm();
 
-  const details = JSON.parse(useAppSelector((store) => store.details));
-  console.log(details);
+  const details = useAppSelector((store) => store.details);
 
   useEffect(() => {
-    setValue("email", details?.email);
-    console.log(details.email);
+    if (details) {
+      const newDetails = JSON.parse(details);
+      setValue("email", newDetails?.email);
+      setLink(newDetails?.deepLinkUrl);
+    }
   }, [details]);
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.header}>
-          {page !== 1 && <BackSvg color="#2B388F" />}
+          {page !== 1 && <BackSvg color="#2B388F" action={() => setPage(page - 1)} />}
           <LogoSvg />
-          <h2>Exit</h2>
+          <h2 onClick={() => (window.location.href = link)}>Exit</h2>
         </div>
         {page === 1 ? (
           <div className={styles.first}>
@@ -70,8 +73,8 @@ export const MultiForm = () => {
                 label="Citizenship"
                 placeholder="Choose Citizenship"
                 data={[
-                  { title: "Citizen", value: "Citizen" },
-                  { title: "Tourist", value: "Tourist" },
+                  { title: "Barbados", value: "Barbados" },
+                  //   { title: "Tourist", value: "Tourist" },
                 ]}
                 name="citizenship"
                 register={register}
@@ -88,7 +91,7 @@ export const MultiForm = () => {
               />
               <Input label="Date of Birth" placeholder="DD/MM/YYYY" name="dob" register={register} type="date" />
               <Input label="Place of Birth" placeholder="Enter Place of Birth" name="placeOfBirth" register={register} type="text" />
-              <Input label="Email" placeholder="Enter Email" name="email" register={register} type="email" />
+              <Input label="Email" placeholder="Enter Email" name="email" register={register} type="email" disabled={details ? true : false} />
             </div>
           </div>
         ) : page === 2 ? (
