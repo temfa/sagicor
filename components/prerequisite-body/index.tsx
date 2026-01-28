@@ -40,12 +40,18 @@ export const PrerequisiteBody = () => {
             </div>
             <div className={styles.formGroup}>
               <label>Country</label>
+              <select>
+                <option value="">Country</option>
+                <option value="Barbados">Barbados</option>
+              </select>
               <input type="text" placeholder="Country" />
             </div>
             <div className={styles.formGroup}>
               <label>ID Type</label>
               <select>
                 <option value="">ID Type</option>
+                <option value="id">National ID</option>
+                <option value="driver">Drivers License</option>
               </select>
             </div>
           </div>

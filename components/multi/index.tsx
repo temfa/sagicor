@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { Button } from "../button";
 import { BackSvg } from "@/svgs/back";
@@ -8,12 +9,21 @@ import { Select } from "../select";
 import { useForm } from "react-hook-form";
 import Input from "../input";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/redux/store/store";
 
 export const MultiForm = () => {
   const [page, setPage] = useState(1);
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
+
+  const details = JSON.parse(useAppSelector((store) => store.details));
+  console.log(details);
+
+  useEffect(() => {
+    setValue("email", details?.email);
+    console.log(details.email);
+  }, [details]);
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -31,7 +41,18 @@ export const MultiForm = () => {
               <p>Review and fill in any missing details below.</p>
             </div>
             <div className={styles.form}>
-              <Select label="Title" placeholder="Choose Title" data={[{ title: "Mr", value: "Mr" }]} name="title" register={register} />
+              <Select
+                label="Title"
+                placeholder="Choose Title"
+                data={[
+                  { title: "Mr", value: "Mr" },
+                  { title: "Mrs", value: "Mrs" },
+                  { title: "Miss", value: "Miss" },
+                  { title: "Dr", value: "Dr" },
+                ]}
+                name="title"
+                register={register}
+              />
               <Input label="First Name" placeholder="Enter First Name" name="fname" register={register} type="text" />
               <Input label="Middle Name" placeholder="Enter Middle Name" name="mname" register={register} type="text" />
               <Input label="Last Name" placeholder="Enter Last Name" name="lname" register={register} type="text" />
@@ -67,6 +88,7 @@ export const MultiForm = () => {
               />
               <Input label="Date of Birth" placeholder="DD/MM/YYYY" name="dob" register={register} type="date" />
               <Input label="Place of Birth" placeholder="Enter Place of Birth" name="placeOfBirth" register={register} type="text" />
+              <Input label="Email" placeholder="Enter Email" name="email" register={register} type="email" />
             </div>
           </div>
         ) : page === 2 ? (
