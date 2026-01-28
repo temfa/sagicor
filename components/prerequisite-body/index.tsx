@@ -44,7 +44,6 @@ export const PrerequisiteBody = () => {
                 <option value="">Country</option>
                 <option value="Barbados">Barbados</option>
               </select>
-              <input type="text" placeholder="Country" />
             </div>
             <div className={styles.formGroup}>
               <label>ID Type</label>
