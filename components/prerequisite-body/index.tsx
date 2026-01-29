@@ -43,7 +43,7 @@ export const PrerequisiteBody = () => {
               <h2>Here are some best practices so that the process is smooth</h2>
             </div>
             <p>
-              Before we get started, you need to agree to the following: <br /> 1.You must take a picture of you original ID. <br />
+              Before we get started, you need to agree to the following: <br /> 1.You must take a picture of your original ID. <br />
               2. You must take a selfie.
             </p>
           </div>

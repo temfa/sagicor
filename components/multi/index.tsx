@@ -57,6 +57,7 @@ export const MultiForm = () => {
   } = useForm<FormData>({
     mode: "onChange",
     reValidateMode: "onChange",
+    shouldUnregister: true,
   });
 
   const details = useAppSelector((store) => store.details);
@@ -96,7 +97,7 @@ export const MultiForm = () => {
           <h2 onClick={() => (window.location.href = link)}>Exit</h2>
         </div>
         {page === 1 ? (
-          <div className={styles.first}>
+          <div className={styles.first} key="First Step">
             <div>
               <h2>
                 Personal <span>Information</span>
@@ -193,7 +194,7 @@ export const MultiForm = () => {
             </div>
           </div>
         ) : page === 2 ? (
-          <div className={styles.second}>
+          <div className={styles.second} key="Second Step">
             <h2>
               Please enter <span>your address</span>
             </h2>
@@ -262,7 +263,7 @@ export const MultiForm = () => {
             </div>
           </div>
         ) : page === 3 ? (
-          <div className={styles.second}>
+          <div className={styles.second} key="Third Step">
             <h2>
               Check your <span>document data</span>
             </h2>
@@ -328,7 +329,7 @@ export const MultiForm = () => {
             </div>
           </div>
         ) : (
-          <div className={styles.first}>
+          <div className={styles.first} key="Fourth Step">
             <div>
               <h2>
                 Questions we <span>have to ask</span>
