@@ -10,7 +10,7 @@ export const StatusBody = () => {
   const link = useMemo(() => {
     if (!details) return "";
     try {
-      return JSON.parse(details)?.deepLinkUrl ?? "";
+      return JSON.parse(details)?.successDeepLinkUrl ?? "";
     } catch {
       return "";
     }

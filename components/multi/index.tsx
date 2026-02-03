@@ -65,7 +65,7 @@ export const MultiForm = () => {
   const link = details
     ? (() => {
         try {
-          return JSON.parse(details)?.deepLinkUrl ?? "";
+          return JSON.parse(details)?.successDeepLinkUrl ?? "";
         } catch {
           return "";
         }

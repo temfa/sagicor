@@ -14,13 +14,21 @@ export const ResidentBody = () => {
   const link = useMemo(() => {
     if (!details) return "";
     try {
-      return JSON.parse(details)?.deepLinkUrl ?? "";
+      return JSON.parse(details)?.successDeepLinkUrl ?? "";
+    } catch {
+      return "";
+    }
+  }, [details]);
+  const failedLink = useMemo(() => {
+    if (!details) return "";
+    try {
+      return JSON.parse(details)?.failureDeepLinkUrl ?? "";
     } catch {
       return "";
     }
   }, [details]);
   const [status, setStatus] = useState(false);
-  if (status) return <Sorry link={link} />;
+  if (status) return <Sorry link={failedLink} />;
   return (
     <div className={styles.container}>
       <div className={styles.top}>

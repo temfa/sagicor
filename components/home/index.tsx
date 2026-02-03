@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { addDetails } from "@/redux/slice/details";
 
 export const HomePage = () => {
-  const [parsedPayload, setParsedPayload] = useState({ email: "", phoneNumber: "", deepLinkUrl: "" });
+  const [parsedPayload, setParsedPayload] = useState({ email: "", phoneNumber: "", successDeepLinkUrl: "", failureDeepLinkUrl: "" });
   const searchParams = useSearchParams();
   const params = searchParams.get("params");
 
@@ -27,7 +27,7 @@ export const HomePage = () => {
       <div className={styles.top}>
         <div className={styles.header}>
           <LogoWhiteSvg />
-          <h2 onClick={() => (window.location.href = parsedPayload.deepLinkUrl)}>Exit</h2>
+          <h2 onClick={() => (window.location.href = parsedPayload.successDeepLinkUrl)}>Exit</h2>
         </div>
         <div className={styles.wrapper}>
           <h2>
