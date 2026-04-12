@@ -8,15 +8,17 @@ import storage from "redux-persist/lib/storage";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import detailsReducer from "../slice/details";
+import sessionReducer from "../slice/sessionId";
 const reducers = combineReducers({
   [mutationApi.reducerPath]: mutationApi.reducer,
   details: detailsReducer,
+  sessionId: sessionReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["details"],
+  whitelist: ["details", "sessionId"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

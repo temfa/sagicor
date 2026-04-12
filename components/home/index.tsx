@@ -3,23 +3,53 @@
 import { LogoWhiteSvg } from "@/svgs/logo-white";
 import { decrypt3DESBrowser } from "@/utils/helper";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "../../app/page.module.css";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { addDetails } from "@/redux/slice/details";
 
 export const HomePage = () => {
-  const [parsedPayload, setParsedPayload] = useState({ email: "", phoneNumber: "", successDeepLinkUrl: "", failureDeepLinkUrl: "" });
+  const [parsedPayload, setParsedPayload] = useState({
+    email: "",
+    phoneNumber: "",
+    successDeepLinkUrl: "",
+    failureDeepLinkUrl: "",
+    metaData: {
+      device_id: "",
+      ip_address: "",
+      device_mac: "",
+      appVersion: "",
+    },
+  });
   const searchParams = useSearchParams();
+  const router = useRouter();
   const params = searchParams.get("params");
+
+  const isValidJson = (str: string) => {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch {
+      return false;
+    }
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (params) {
       const payload = decrypt3DESBrowser(params as string);
-      setParsedPayload(JSON.parse(payload));
-      dispatch(addDetails(payload));
+      console.log(payload);
+      if (payload.success) {
+        if (isValidJson(payload.data)) {
+          setParsedPayload(JSON.parse(payload.data));
+          dispatch(addDetails(JSON.parse(payload.data)));
+        } else {
+          router.push(`/status?state=INVALID_PARAMS`);
+        }
+      } else {
+        router.push(`/status?state=INVALID_PARAMS`);
+      }
     }
   }, []);
   return (

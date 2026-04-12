@@ -1,13 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 const detailsSlice = createSlice({
   name: "details",
-  initialState: "",
+  initialState: {
+    email: "",
+    phoneNumber: "",
+    successDeepLinkUrl: "",
+    failureDeepLinkUrl: "",
+    metaData: {
+      device_id: "",
+      ip_address: "",
+      device_mac: "",
+      appVersion: "",
+    },
+  },
   reducers: {
     addDetails: (state, { payload }) => {
       return payload;
     },
     clearDetails: () => {
-      return "";
+      return {
+        email: "",
+        phoneNumber: "",
+        successDeepLinkUrl: "",
+        failureDeepLinkUrl: "",
+        metaData: {
+          device_id: "",
+          ip_address: "",
+          device_mac: "",
+          appVersion: "",
+        },
+      };
     },
   },
 });

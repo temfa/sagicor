@@ -1,4 +1,4 @@
-import React from "react";
+import { Loader } from "../loader";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 export const Button = ({ buttonText, active, onClick, disabled, loading = false }: Props) => {
   return (
     <button className={active ? (disabled ? styles.disabled : styles.active) : styles.inactive} onClick={onClick}>
-      {loading ? "Loading..." : buttonText}
+      {loading ? <Loader /> : buttonText}
     </button>
   );
 };

@@ -14,7 +14,7 @@ export const ResidentBody = () => {
   const link = useMemo(() => {
     if (!details) return "";
     try {
-      return JSON.parse(details)?.successDeepLinkUrl ?? "";
+      return details?.failureDeepLinkUrl ?? "";
     } catch {
       return "";
     }
@@ -22,7 +22,7 @@ export const ResidentBody = () => {
   const failedLink = useMemo(() => {
     if (!details) return "";
     try {
-      return JSON.parse(details)?.failureDeepLinkUrl ?? "";
+      return details?.failureDeepLinkUrl ?? "";
     } catch {
       return "";
     }

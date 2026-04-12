@@ -65,6 +65,7 @@ export default function CameraCapture({ action, cameraType }: { action: () => vo
         style={{
           opacity: isCameraReady ? 1 : 0,
           transition: "opacity 0.2s ease",
+          objectFit: "cover",
         }}
       />
 

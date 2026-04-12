@@ -1,23 +1,55 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { LogoWhiteSvg } from "@/svgs/logo-white";
 import styles from "./styles.module.css";
-import Link from "next/link";
 import { BackSvg } from "@/svgs/back";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useAppSelector } from "@/redux/store/store";
+import { useVerification } from "@/hooks/useVerification";
+import { Loader } from "@/components/loader";
 
 const Request = () => {
   const router = useRouter();
   const details = useAppSelector((store) => store.details);
-  const link = useMemo(() => {
-    if (!details) return "";
+  const parsedDetails = useMemo(() => {
+    if (!details) return null;
+
     try {
-      return JSON.parse(details)?.successDeepLinkUrl ?? "";
+      return details;
     } catch {
-      return "";
+      return null;
     }
   }, [details]);
+
+  const link = parsedDetails?.failureDeepLinkUrl ?? "";
+
+  const { start, loading, error, authentixLink, success } = useVerification();
+
+  const action = () => {
+    if (!parsedDetails) return;
+
+    start(`+${parsedDetails.phoneNumber}`, parsedDetails.metaData?.device_id, parsedDetails.metaData?.device_mac);
+  };
+
+  useEffect(() => {
+    if (success) router.push("/register");
+  }, [success]);
+
+  useEffect(() => {
+    if (error) {
+      router.push("/status");
+      console.log(error);
+    }
+  }, [error, link]);
+
+  if (authentixLink)
+    return (
+      <div className={styles.iframe}>
+        <iframe src={authentixLink} title="" />
+      </div>
+    );
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -34,7 +66,7 @@ const Request = () => {
         </div>
       </div>
       <div className={styles.link}>
-        <Link href="/prerequisite">CONTINUE</Link>
+        <button onClick={action}>{loading ? <Loader /> : "CONTINUE"} </button>
       </div>
     </div>
   );

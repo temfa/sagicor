@@ -160,23 +160,61 @@ function derive3DesKey(plainKey: string): CryptoJS.lib.WordArray {
   // Take first 24 bytes (192 bits) for 3DES
   return CryptoJS.lib.WordArray.create(hash.words.slice(0, 6), 24);
 }
+const isValidBase64 = (str: string) => {
+  try {
+    return btoa(atob(str)) === str;
+  } catch {
+    return false;
+  }
+};
 
-// Step 2: Decrypt Base64 string
-export function decrypt3DESBrowser(encryptedBase64: string, plainKey: string = "KopqC22gKwFmXpLw369IlPNCtozTvzLBwUFKCv3KHX8=") {
-  // Remove newlines and whitespace
-  const cleaned = encryptedBase64.replace(/\s+/g, "");
+type DecryptResult<T = any> = {
+  success: boolean;
+  data?: T;
+  error?: string;
+};
 
-  // Base64 decode to WordArray
-  const encryptedWords = CryptoJS.enc.Base64.parse(cleaned);
+export function decrypt3DESBrowser(encryptedBase64: string, plainKey: string = "KopqC22gKwFmXpLw369IlPNCtozTvzLBwUFKCv3KHX8="): DecryptResult {
+  try {
+    if (!encryptedBase64) {
+      return { success: false, error: "No encrypted data provided" };
+    }
 
-  // Derive key
-  const key = derive3DesKey(plainKey);
+    const cleaned = encryptedBase64.replace(/\s+/g, "");
 
-  // Decrypt using ECB + PKCS5Padding (CryptoJS default)
-  const decrypted = CryptoJS.TripleDES.decrypt({ ciphertext: encryptedWords } as any, key, {
-    mode: CryptoJS.mode.ECB,
-    padding: CryptoJS.pad.Pkcs7,
-  });
+    // ✅ Validate Base64
+    if (!isValidBase64(cleaned)) {
+      return { success: false, error: "Invalid Base64 string" };
+    }
 
-  return decrypted.toString(CryptoJS.enc.Utf8);
+    const encryptedWords = CryptoJS.enc.Base64.parse(cleaned);
+
+    const key = derive3DesKey(plainKey);
+
+    const decrypted = CryptoJS.TripleDES.decrypt({ ciphertext: encryptedWords } as any, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7,
+    });
+
+    const result = decrypted.toString(CryptoJS.enc.Utf8);
+
+    // ✅ Validate decrypted output
+    if (!result) {
+      return { success: false, error: "Decryption failed or empty result" };
+    }
+
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (error) {
+    console.error("Decryption error:", error);
+
+    return {
+      success: false,
+      error: "Unexpected decryption error",
+    };
+  }
 }
+
+export const baseUrl = "https://bimpay-sit.sagicor.bank/otmServer.svc/bimpay/";
