@@ -61,12 +61,52 @@ export const MultiForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!parsedDetails) return;
-      const data = await getData(sessionId, parsedDetails?.metaData?.device_id, parsedDetails?.metaData?.device_mac, parsedDetails?.email);
-      setData1(data);
-      setPageLoading(false);
+
+      try {
+        const data = await getData(sessionId, parsedDetails?.metaData?.device_id, parsedDetails?.metaData?.device_mac, parsedDetails?.email);
+
+        if (!data) {
+          setPageLoading(false);
+          return;
+        }
+
+        setData1(data);
+
+        // ✅ SAFE PREFILL
+        const defaultValues: Record<string, any> = {};
+
+        if (Array.isArray(data?.data)) {
+          data.data.forEach((item: any) => {
+            if (!item || !Array.isArray(item.fields)) return;
+
+            item.fields.forEach((field: any) => {
+              if (!field || typeof field.id === "undefined") return;
+
+              const fieldKey = `step_1_${field.id}`;
+
+              // handle all possible value states
+              if (field.value !== undefined && field.value !== null) {
+                defaultValues[fieldKey] = field.value;
+              } else {
+                defaultValues[fieldKey] = "";
+              }
+            });
+          });
+        }
+
+        // ✅ ensure reset happens after render cycle
+        setTimeout(() => {
+          reset(defaultValues);
+        }, 0);
+      } catch (err) {
+        console.log("getData error:", err);
+      } finally {
+        setPageLoading(false);
+      }
     };
+
     fetchData();
-  }, [sessionId, parsedDetails]);
+  }, [sessionId, parsedDetails, reset]);
 
   // ================= FIELD MAP =================
   const { fieldByDescr } = useMemo(() => {
@@ -118,7 +158,6 @@ export const MultiForm = () => {
       .map((field: any) => {
         const fieldKey = `step_${page}_${field.id}`;
 
-        // visible field
         if (!field.hidden) {
           const value = values[fieldKey] ?? "";
 
@@ -128,7 +167,6 @@ export const MultiForm = () => {
           };
         }
 
-        // hidden field
         const match = (fieldByDescr[field.descr] || []).find((f: any) => !f.hidden);
 
         if (match) {
@@ -177,6 +215,8 @@ export const MultiForm = () => {
       setLoading(false);
     }
   };
+  console.log(data1);
+
   const link = parsedDetails?.failureDeepLinkUrl ?? "";
 
   if (pageLoading) return <Loading />;

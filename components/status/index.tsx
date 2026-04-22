@@ -21,6 +21,10 @@ const STATUS_MAP: Record<string, StatusConfig> = {
     subtitle: "We’ve received your application and it is currently being reviewed.",
     description: "Look out for an email from us within 5 business days advising you of the next steps to continue the account opening process.",
   },
+  VERIFY_FAILED: {
+    title: "Verification Failed",
+    description: "Please try again",
+  },
   ACCOUNT_OPENING_ERROR: {
     title: "We’re unable to open your account",
     description:

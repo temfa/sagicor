@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // hooks/useVerification.ts
 
 import { addSessionId } from "@/redux/slice/sessionId";
 import { checkSession, endSession, startSession } from "@/services/session";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 
@@ -28,6 +30,8 @@ export const useVerification = (): UseVerificationReturn => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dispatch = useDispatch();
   const attemptsRef = useRef(0);
+
+  const router = useRouter();
 
   const MAX_ATTEMPTS = 60;
 
@@ -80,7 +84,10 @@ export const useVerification = (): UseVerificationReturn => {
         if (result.BimPayCheckAu10tixResult.status === "DONE") {
           setPolling(false);
           setSuccess(true);
-          setAuthentixLink(null);
+          router.push("/register");
+          setTimeout(() => {
+            setAuthentixLink(null);
+          }, 2000);
           return;
         }
 

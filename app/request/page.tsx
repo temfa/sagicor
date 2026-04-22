@@ -24,7 +24,7 @@ const Request = () => {
 
   const link = parsedDetails?.failureDeepLinkUrl ?? "";
 
-  const { start, loading, error, authentixLink, success } = useVerification();
+  const { start, loading, error, authentixLink } = useVerification();
 
   const action = () => {
     if (!parsedDetails) return;
@@ -33,20 +33,20 @@ const Request = () => {
   };
 
   useEffect(() => {
-    if (success) router.push("/register");
-  }, [success]);
-
-  useEffect(() => {
     if (error) {
-      router.push("/status");
-      console.log(error);
+      if (error === "Verification failed") {
+        router.push(`/status?state=VERIFY_FAILED`);
+      } else {
+        console.log(error);
+        router.push("/status");
+      }
     }
   }, [error, link]);
 
   if (authentixLink)
     return (
       <div className={styles.iframe}>
-        <iframe src={authentixLink} title="" />
+        <iframe src={authentixLink} title="" allow="camera *; microphone *; fullscreen *" />
       </div>
     );
 

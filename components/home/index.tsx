@@ -63,9 +63,7 @@ export const HomePage = () => {
           <h2>
             Welcome! <br /> <span>Before we get started...</span>
           </h2>
-          <p>
-            Please take a moment to read and accept our <span>Terms and Conditions</span> in order to continue with your registration process.
-          </p>
+          <p>Please take a moment to read and consent to how Sagicor Bank collects and uses your data in order to continue with your registration process.</p>
         </div>
       </div>
       <div className={styles.link}>

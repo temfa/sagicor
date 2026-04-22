@@ -40,7 +40,7 @@ export const HowBody = () => {
           <input type="checkbox" name="" id="" onChange={() => setActive(true)} />
           <p>I consent to the collection and usage of my data</p>
         </div>
-        <Button buttonText="CONFIRM" loading={false} active={active} onClick={() => router.push("/user")} />
+        <Button buttonText="CONFIRM" loading={false} active={active} onClick={() => router.push("/resident")} />
       </div>
     </div>
   );
