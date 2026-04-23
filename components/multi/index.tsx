@@ -141,6 +141,7 @@ export const MultiForm = () => {
   }, [data1, page]);
 
   // ================= HANDLE NEXT =================
+  // ================= HANDLE NEXT =================
   const handleNext = async () => {
     setLoading(true);
 
@@ -159,11 +160,9 @@ export const MultiForm = () => {
         const fieldKey = `step_${page}_${field.id}`;
 
         if (!field.hidden) {
-          const value = values[fieldKey] ?? "";
-
           return {
             id: field.id,
-            value,
+            value: values[fieldKey] ?? "",
           };
         }
 
@@ -171,11 +170,9 @@ export const MultiForm = () => {
 
         if (match) {
           const matchKey = `step_${page}_${match.id}`;
-          const value = values[matchKey] ?? "";
-
           return {
             id: field.id,
-            value,
+            value: values[matchKey] ?? "",
           };
         }
 
@@ -198,14 +195,26 @@ export const MultiForm = () => {
 
         setData1(dataGotten);
 
-        const nextStepFields = dataGotten?.data?.flatMap((item: any) => item.fields.map((field: any) => `step_${nextPage}_${field.id}`));
+        // ✅ CRITICAL: isolate ONLY next page values
+        const nextValues: Record<string, any> = {};
 
-        const emptyValues = nextStepFields.reduce((acc: any, id: string) => {
-          acc[id] = "";
-          return acc;
-        }, {});
+        if (Array.isArray(dataGotten?.data)) {
+          dataGotten.data.forEach((item: any) => {
+            if (!item || !Array.isArray(item.fields)) return;
 
-        reset(emptyValues);
+            item.fields.forEach((field: any) => {
+              if (!field || typeof field.id === "undefined") return;
+
+              const key = `step_${nextPage}_${field.id}`;
+
+              // only assign values for NEXT page fields
+              nextValues[key] = field.value !== undefined && field.value !== null ? field.value : "";
+            });
+          });
+        }
+
+        // ✅ HARD RESET → prevents leakage from previous page
+        reset(nextValues);
 
         setPage(nextPage);
       }

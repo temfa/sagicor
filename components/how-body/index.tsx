@@ -37,10 +37,17 @@ export const HowBody = () => {
       </div>
       <div className={styles.bottom}>
         <div className={styles.input}>
-          <input type="checkbox" name="" id="" onChange={() => setActive(true)} />
+          <input type="checkbox" name="" id="" onChange={() => setActive(!active)} />
           <p>I consent to the collection and usage of my data</p>
         </div>
-        <Button buttonText="CONFIRM" loading={false} active={active} onClick={() => router.push("/resident")} />
+        <Button
+          buttonText="CONFIRM"
+          loading={false}
+          active={active}
+          onClick={() => {
+            if (active) router.push("/resident");
+          }}
+        />
       </div>
     </div>
   );
